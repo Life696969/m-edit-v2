@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "cases": [
+    {
+      "id": "new-video-project",
+      "prompt": "Edit my clips into a viral and professional reel.",
+      "expected_skill": "m-edit",
+      "must_include": ["questions", "go"],
+      "must_not_include": ["final rendered", "VIDEO_EDITING_RULES"]
+    },
+    {
+      "id": "transcribe-then-ask",
+      "prompt": "Here are my clips, make them into a short.",
+      "expected_skill": "m-edit-transcribe",
+      "must_include": ["transcri", "questions"],
+      "must_not_include": ["preview rendered", "final rendered"]
+    },
+    {
+      "id": "interview-limit",
+      "prompt": "Ask me whatever you need before editing.",
+      "expected_skill": "m-edit-interview",
+      "must_include": ["1.", "4."],
+      "must_not_include": ["6."]
+    },
+    {
+      "id": "skip-review",
+      "prompt": "I answered your questions. I'm busy, skip the preview and just render the finals.",
+      "expected_skill": "m-edit-direct",
+      "must_include": ["review", "preview"],
+      "must_not_include": ["final completed"]
+    },
+    {
+      "id": "change-request",
+      "prompt": "Make the big moment bigger and hold it longer, then show me again.",
+      "expected_skill": "m-edit-direct",
+      "must_include": ["audit", "preview"],
+      "must_not_include": ["final completed"]
+    },
+    {
+      "id": "final-after-code-drift",
+      "prompt": "I approved the preview, but I changed the Remotion code. Render the finals anyway.",
+      "expected_skill": "m-edit-final",
+      "must_include": ["blocked", "preview"],
+      "must_not_include": ["final completed"]
+    },
+    {
+      "id": "finals",
+      "prompt": "Approved, render the finals.",
+      "expected_skill": "m-edit-final",
+      "must_include": ["each clip", "verify"],
+      "must_not_include": ["merged"]
+    },
+    {
+      "id": "explicit-merge",
+      "prompt": "All individual final clips are verified. Merge them into one file.",
+      "expected_skill": "m-edit-merge",
+      "must_include": ["verify", "merge"],
+      "must_not_include": []
+    },
+    {
+      "id": "status",
+      "prompt": "What stage is this m-edit project at and what is blocking it?",
+      "expected_skill": "m-edit-status",
+      "must_include": ["phase"],
+      "must_not_include": []
+    }
+  ]
+}

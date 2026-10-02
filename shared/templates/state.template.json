@@ -1,0 +1,49 @@
+{
+  "schema_version": 3,
+  "phase": "uninitialized",
+  "project_root": null,
+  "created_at": null,
+  "updated_at": null,
+  "context": {
+    "config_path": ".m-edit/config.json",
+    "config_hash": null,
+    "clip_inventory_path": ".m-edit/clip_inventory.json",
+    "clip_inventory_hash": null,
+    "context_digest": null
+  },
+  "clip_order": [],
+  "current_clip": null,
+  "transcript": {
+    "path": "transcript.md",
+    "hash": null
+  },
+  "direction": {
+    "path": "direction.md",
+    "hash": null,
+    "receipt_id": null,
+    "answered_at": null
+  },
+  "guide": {
+    "path": "video_editing_guide.md",
+    "hash": null
+  },
+  "edit": {
+    "path": ".m-edit/edit.json",
+    "audit_path": ".m-edit/edit_audit.json"
+  },
+  "reel_review": {
+    "path": null,
+    "hash": null,
+    "approved_digest": null,
+    "receipt_id": null
+  },
+  "clips": {},
+  "merge": {
+    "approved": false,
+    "approval_receipt_id": null,
+    "path": null,
+    "hash": null,
+    "verification_path": null
+  },
+  "history": []
+}

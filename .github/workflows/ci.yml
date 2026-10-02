@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ['3.10', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install Python test dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Install FFmpeg on Windows
+        if: runner.os == 'Windows'
+        run: choco install ffmpeg --no-progress -y
+      - name: Run deterministic tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+      - name: Validate Agent Skills
+        run: python scripts/validate_skills.py
+      - name: Validate default configuration
+        run: python shared/scripts/validate_config.py --config shared/templates/config.template.json
+      - name: Public release audit
+        run: python shared/scripts/release_audit.py --root .
+      - name: PowerShell installer smoke test
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./tests/test_powershell_install.ps1
+
+  package:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: make package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: m-edit-source-release
+          path: dist/*

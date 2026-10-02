@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "clip": "clip.mp4",
+  "composition_id": "CompositionId",
+  "entry_point": "src/index.ts",
+  "input_props": {},
+  "render_command": "npx remotion render <composition> <output> --props=<props>",
+  "files": [],
+  "bundle_digest": null
+}

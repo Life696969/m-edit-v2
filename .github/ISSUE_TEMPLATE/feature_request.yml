@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose a generic improvement that is useful across creators and video types.
+title: "[feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the recurring problem, not only a preferred implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Pressure scenario
+      description: Show how a coding agent currently fails without this change.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+    validations:
+      required: true

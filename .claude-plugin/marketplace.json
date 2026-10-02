@@ -1,0 +1,29 @@
+{
+  "name": "m-edit",
+  "description": "Open-source, self-contained video editing skill for coding agents",
+  "version": "2.0.0",
+  "owner": {
+    "name": "m-edit contributors"
+  },
+  "plugins": [
+    {
+      "name": "m-edit",
+      "source": "./",
+      "description": "Edit a folder of clips into a professional, high-retention video, reel or short: 4-5 questions, an autonomous audited edit, one preview review, verified individual finals.",
+      "version": "2.0.0",
+      "license": "MIT",
+      "category": "media",
+      "tags": [
+        "captions",
+        "reels",
+        "remotion",
+        "short-form",
+        "shorts",
+        "subtitles",
+        "transcription",
+        "video"
+      ],
+      "strict": true
+    }
+  ]
+}

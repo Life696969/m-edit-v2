@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+dist/
+build/
+*.zip
+*.sha256
+.DS_Store
+Thumbs.db
+.m-edit/
+.m-edit-suite/
+m-edit-output/

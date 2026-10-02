@@ -1,0 +1,30 @@
+name: Bug report
+description: Report an incorrect workflow transition, installer issue, or media verification problem.
+title: "[bug] "
+labels: [bug]
+body:
+  - type: dropdown
+    id: host
+    attributes:
+      label: Host
+      options: [Claude Code, Codex, Generic Agent Skills, Other]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: m-edit version
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the phase, command, expected result, actual result, and sanitized state warnings.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      render: shell

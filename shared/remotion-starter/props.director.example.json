@@ -1,0 +1,70 @@
+{
+ "width": 1080,
+ "height": 1920,
+ "fps": 30,
+ "durationSec": 6,
+ "src": "m-edit-assets/clip1.mp4",
+ "words": [
+  {
+   "t": "Example",
+   "s": 0.1,
+   "e": 0.5
+  },
+  {
+   "t": "words",
+   "s": 0.5,
+   "e": 0.9
+  }
+ ],
+ "chunks": [
+  {
+   "words": [
+    0,
+    1
+   ],
+   "hl": [
+    1
+   ],
+   "y": 0.68
+  }
+ ],
+ "camera": {
+  "origin": [
+   0.5,
+   0.36
+  ],
+  "keys": [
+   {
+    "t": 0,
+    "s": 1.04,
+    "x": 0,
+    "y": 0
+   },
+   {
+    "t": 1,
+    "s": 1.055,
+    "x": 0.002,
+    "y": -0.001
+   }
+  ],
+  "shakes": []
+ },
+ "layers": [],
+ "cues": [],
+ "geom": {
+  "cx": 0.5,
+  "cy": 0.36,
+  "h": 0.45
+ },
+ "theme": {
+  "font": "Inter, \"Segoe UI\", system-ui, sans-serif",
+  "textColor": "#FFFFFF",
+  "highlightColor": "#FFE14D",
+  "captionSize": 68,
+  "bigCaptionSize": 86,
+  "stage": "#0A0E17",
+  "stageGlow": "#2B4F9A66",
+  "cardBackground": "#FFFFFF"
+ },
+ "cutawayCaptionY": 0.765
+}

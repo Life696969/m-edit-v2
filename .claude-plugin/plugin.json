@@ -1,0 +1,23 @@
+{
+  "name": "m-edit",
+  "description": "Edit a folder of clips into a professional, high-retention video, reel or short: 4-5 questions, an autonomous audited edit, one preview review, verified individual finals.",
+  "version": "2.0.0",
+  "author": {
+    "name": "m-edit contributors"
+  },
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "captions",
+    "creative-director",
+    "reels",
+    "remotion",
+    "short-form",
+    "shorts",
+    "subtitles",
+    "transcription",
+    "video-editing"
+  ],
+  "skills": "./skills",
+  "commands": "./commands"
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 3,
+  "mode": "auto",
+  "output_root": "m-edit-output",
+  "source_hash_mode": "full",
+  "transcription": {
+    "provider": "auto",
+    "language": "auto",
+    "model": "base",
+    "model_path": null,
+    "existing_caption_globs": [
+      "*.srt",
+      "*.vtt",
+      "*.json"
+    ],
+    "word_timestamps": true,
+    "allow_network": false
+  },
+  "workflow": {
+    "preview_approval_required": true,
+    "merge_requires_explicit_request": true
+  },
+  "direction": {
+    "max_questions": 5,
+    "min_questions": 4
+  },
+  "edit_rules": {
+    "camera_pulse_seconds": 1.0,
+    "camera_scale_min": 1.03,
+    "camera_scale_max": 1.075,
+    "camera_drift_max": 0.006,
+    "camera_min_move": 0.004,
+    "edge_margin_px": 8,
+    "cutaway_share_max": 0.35,
+    "cutaway_max_seconds": 4.5,
+    "max_caption_words": 4,
+    "max_caption_hold_seconds": 1.9,
+    "max_anchor_hits": 1,
+    "background": "preserve",
+    "people_require_spoken_name": true,
+    "caption_mouth_gap_px": 24,
+    "card_eye_clearance_px": 150
+  },
+  "depth": {
+    "matte_provider": "none",
+    "model_path": null
+  },
+  "assets": {
+    "allow_network": false,
+    "allow_free_licensed_downloads": false,
+    "require_source_ledger": true
+  },
+  "render": {
+    "aspect_ratio": "auto",
+    "width": null,
+    "height": null,
+    "fps": null,
+    "codec": "h264",
+    "container": "mp4",
+    "require_audio": "auto",
+    "preview_scale": 0.5,
+    "preview_crf": 28,
+    "final_crf": 18,
+    "fidelity_min_ssim": 0.95,
+    "renderer_timeout_ms": 240000,
+    "retry_concurrency": 1
+  },
+  "verification": {
+    "ffmpeg_timeout_seconds": 300,
+    "full_decode": true,
+    "generate_contact_sheet": true,
+    "compare_final_to_preview": true
+  }
+}

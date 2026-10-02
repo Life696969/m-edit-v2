@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "phase", "project_root", "context", "clip_order", "clips", "history"],
+  "properties": {
+    "schema_version": {"const": 2},
+    "phase": {"type": "string"},
+    "project_root": {"type": ["string", "null"]},
+    "clip_order": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "current_clip": {"type": ["string", "null"]},
+    "clips": {"type": "object"},
+    "history": {"type": "array"}
+  }
+}
