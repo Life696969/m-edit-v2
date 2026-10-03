@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@unittest.skipIf(os.name == 'nt', 'tests the bash installer; on Windows the PowerShell installer is tested by tests/test_powershell_install.ps1')
 class InstallTests(unittest.TestCase):
     def run_install(self, *args, env=None):
         return subprocess.run(['bash', str(ROOT / 'install.sh'), *args], check=True, capture_output=True, text=True, env=env)
