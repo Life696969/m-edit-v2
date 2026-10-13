@@ -4,7 +4,7 @@ description: Use when every individual final is verified and the user explicitly
 license: MIT
 compatibility: Requires FFmpeg/FFprobe or an equivalent deterministic merge path.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # Merge verified finals
@@ -20,7 +20,15 @@ Run:
 
 Use only verified finals in the recorded order. Preserve synchronization. Use stream copy only when codecs, dimensions, FPS, time bases, and audio formats are compatible; otherwise perform one documented high-quality encode.
 
-Verify the merged output independently, create a contact sheet, and write a merge report listing every input path and hash. Record completion:
+Unless the user opted out of clean delivery (`delivery.clean: false`), clean the merged file before verifying it. Concatenating with FFmpeg re-adds container tags and box fingerprints. The finals' audio carries no encoder signature, so it is copied, never re-encoded:
+
+```bash
+<suite-root>/bin/m-edit deliver-clean clean --input "<merged-working-file>" --output "<merged>"
+```
+
+If the merge needed a re-encode (incompatible inputs), pass the lossless concatenated audio as `--audio`; never feed the clean step re-encoded lossy audio.
+
+Verify the merged output independently, create a contact sheet, and write a merge report listing every input path and hash, plus the delivery report. Record completion:
 
 ```bash
 <suite-root>/bin/m-edit verify --input "<merged>" --output "<verification>" --contact-sheet "<contact-sheet>" [--require-audio]

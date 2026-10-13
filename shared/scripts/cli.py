@@ -40,6 +40,7 @@ ROUTES = {
     'transcribe': ('transcribe.py', False),
     'captions': ('captions.py', False),
     'verify': ('verify_media.py', False),
+    'deliver-clean': ('deliver_clean.py', False),
     'doctor': ('doctor.py', False),
     'scaffold-remotion': ('scaffold_remotion.py', False),
     'validate-config': ('validate_config.py', False),
@@ -67,6 +68,7 @@ Editing rules as code:
 Media and integrity:
   m-edit recipe create|verify ...      m-edit verify ...
   m-edit captions import|validate|chunk|export-srt ...
+  m-edit deliver-clean deliver|check|clean ...  clean final: no metadata, top-notch audio, two check rounds
   m-edit transcribe detect|run ...     m-edit guard --kind preview|final|merge ...
   m-edit scaffold-remotion --project DIR
 """

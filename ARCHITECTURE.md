@@ -13,7 +13,7 @@
 ## Layers
 
 ```text
-user request ──► m-edit (router) ──► transcribe ──► interview [STOP] ──► direct ──► review [STOP] ──► final
+user request ──► m-edit (router) ──► transcribe ──► interview [STOP] ──► direct ──► review [STOP] ──► final ──► deliver-clean
                                                                            │
                          edit.json ◄── creative judgement (references) ────┘
                              │
@@ -30,6 +30,8 @@ user request ──► m-edit (router) ──► transcribe ──► interview 
 | `edit_audit.py` | `audit` (rules as code) and `camera` (a deterministic sine-eased camera that passes the audit) |
 | `edit_props.py` | `edit.json` → per-clip `ReelClip` props (preview and final presets) |
 | `recipe.py`, `verify_media.py` | hash-locked render recipes; full decode, fps-normalised SSIM and duration parity |
+| `deliver_clean.py` | clean final delivery: the approved mix rebuilt losslessly from `edit.json` (gain-only voice, one reel gain), one AAC encode, the container scrub, two check rounds and the `delivery_check` report `mark-reel-final` requires |
+| `mp4_scrub.py` | standard-library MP4 box rewrite (brands, metadata boxes, `colr nclx`, short `esds`, real times, chunk offsets) and inspection |
 
 ## Extension points (growth foundation)
 
@@ -68,3 +70,12 @@ One repository serves as:
 
 * a Claude Code plugin and marketplace
 * a manually installable skill suite for Claude, Codex and generic Agent Skills hosts
+
+## Clean delivery (2.1): growth foundation
+
+* **Now:** every final from the `ReelClip` path is delivered clean, plus a `clean` mode for files m-edit did not render.
+* **Next (likely):** other render backends (an OpenMontage adapter is on the roadmap) and other containers or codecs.
+* **Foundation now:** delivery depends only on a rendered video, the audited `edit.json` (through `edit_props.build`) and the public dir. A new backend that produces the same props needs no change to delivery, and `clean --audio` covers any pipeline that can export its lossless mix. The checks are plain functions shared by both rounds and both modes.
+* **Deferred:** HEVC/ProRes scrubbing, a non-AAC audio codec, and per-platform loudness presets. Each would be justified by a user asking for that output.
+* **Preservation:** 2.0 configs without `delivery` get the defaults. The approval digest is unchanged (the `delivery` section is operational). Only `mark-reel-final` gained a requirement, and the user can opt out explicitly.
+* **Evidence:** `tests/test_delivery.py`; `clean` mode exercises the same checks on a file built outside m-edit.

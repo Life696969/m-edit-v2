@@ -14,7 +14,7 @@ Ask **once**, before editing starts: one message with **4–5 numbered questions
 |---|---|---|
 | 1 | **Words that must be exact** | Uncertain names, products, numbers and call-to-action keywords, with how you'll show them on screen. Also the caption script if the transcriber's script may differ from the speaker's. |
 | 2 | **The biggest moment** | The one line that deserves the single biggest visual and sound hit, and how you'll stage it. Offer the depth version ("behind you") only if a matte provider is configured, or ask permission for it in question 4. Otherwise propose the graphic in front, in the free part of the frame. |
-| 3 | **The look and the music** | One coherent look that fits the content and platform, plus a music vibe. For example: "clean modern: white captions with one accent colour, rounded cards, upbeat electronic music that drops on the big moment". |
+| 3 | **The look, the music and the loudness** | One coherent look that fits the content and platform, plus a music vibe, plus the finals' loudness: **voice-safe** (default: as loud as the voice stays untouched by any limiter) or **standard** (about −14 LUFS). For example: "clean modern: white captions with one accent colour, rounded cards, upbeat electronic music that drops on the big moment; finals at **voice-safe** loudness". Record the answer as `delivery.loudness` in `.m-edit/config.json` before `record-direction`. |
 | 4 | **Permissions** (one question) | Whatever the edit needs that isn't authorized yet: downloading free, licensed music and SFX (each logged with its licence); setting up the video editor (scaffold the Remotion starter and `npm install`); and the background-removal model (~100 MB) for a depth effect. |
 
 ## Optional fifth (only when it matters)
@@ -42,7 +42,7 @@ Example (neutral):
 Before I edit, 4 quick ones (my picks in bold; reply "go" to accept):
 1. On-screen words: product name as **Acme Notes**, offer code **SPRING20**?
 2. Biggest moment: **"we hit one million users"**, with a big "1,000,000" counting up beside you, a bass hit and the music drop?
-3. Look and music: **clean modern: white captions with a yellow accent, white rounded cards, upbeat electronic**?
+3. Look, music and loudness: **clean modern: white captions with a yellow accent, white rounded cards, upbeat electronic; finals at voice-safe loudness** (or standard, about −14 LUFS)?
 4. OK to download free, licensed music and sound effects (each logged with its licence) and set up the video editor in this folder (**yes**)?
 Reply "go", or tell me what to change.
 ```

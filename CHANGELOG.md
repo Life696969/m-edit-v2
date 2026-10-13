@@ -1,5 +1,32 @@
 # Changelog
 
+## 2.1.0
+
+**Clean final delivery.** Every final is now delivered without metadata, with the original voice, and checked twice. See [`docs/CLEAN-DELIVERY.md`](docs/CLEAN-DELIVERY.md).
+
+### Added
+
+- `m-edit deliver-clean deliver`: builds each final from its render and the audited `edit.json`, then runs round 1 inline and round 2 in a fresh process. It writes `.m-edit/deliveries/<clip>/delivery_check.json` and `.md`.
+  - **No metadata or encoder traces:** text tags, encoder strings and the x264 SEI banner are removed, along with FFmpeg's structural fingerprints (`ftyp` brands, `udta`/`meta`/`free`/`btrt` boxes, ICC `colr`, long `esds`, zeroed times). Nothing is forged.
+  - **Top-notch audio:** the voice is the clip's own recording at gain only (no declipper, compressor or EQ). One reel-wide gain keeps every approved balance. Music and effects yield to the voice only on coinciding peaks. The safety limiter is capped at 1 dB, and there is **one** AAC-LC encode at ≥ 320k, redone from the lossless mix if the encoder undershoots.
+  - **Video:** copied bit for bit.
+- `m-edit deliver-clean clean` for finals m-edit did not render, and `m-edit deliver-clean check` for round 2 on any MP4.
+- `shared/scripts/mp4_scrub.py`: a standard-library MP4 box scrubber and inspector.
+- A loudness choice in question 3 of the direction interview: **voice-safe** (default: as loud as no limiter ever touches the voice) or **standard** (about −14 LUFS). It is stored as `delivery.loudness`.
+- `m-edit doctor` checks clean-delivery readiness: numpy, plus FFmpeg's `filter_units`, `alimiter` and `aac`.
+- `tests/test_delivery.py`.
+
+### Changed
+
+- `mark-reel-final` requires `--delivery <passing report for exactly this final>` unless the user explicitly opted out (`delivery.clean: false`, quoted in the final report).
+- `m-edit-final`: render → deliver-clean → verify → mark final. Working renders are deleted once their clean final is recorded.
+- Sound design: the voice stays at gain only in the edit. Delivery sets the loudness once for the whole video, and previews are judged for balance, not level.
+- The config gains an optional `delivery` section; 2.0 configs keep working with the defaults.
+
+### Requirements
+
+- numpy, used only by `deliver-clean` (the agent asks before installing).
+
 ## 2.0.0
 
 A new workflow. 1.x projects must be finished with 1.x (see `docs/UPGRADING-FROM-1.md`).

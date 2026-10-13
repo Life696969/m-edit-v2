@@ -94,6 +94,9 @@ def fresh_clip_record(fingerprint: dict[str, Any] | None = None) -> dict[str, An
         'final_path': None,
         'final_hash': None,
         'verification_path': None,
+        'delivery_path': None,
+        'delivery_hash': None,
+        'delivery': None,
     }
 
 
@@ -149,8 +152,11 @@ def inventory_digest(inventory: dict[str, Any]) -> str:
 
 # Operational settings: granting a download, setting up a matte model or raising a render timeout after the
 # answers must not reset the edit. Everything else in the config shapes the edit and is bound.
+# Not bound into the approved context. `delivery` (clean on/off, loudness) never changes the approved picture or mix
+# balance (the preview plays each recording at its own level): the loudness answer is written during the direction
+# interview, and a user may still opt out after approving. Every delivery report records the mode it used.
 OPERATIONAL = {'assets': None, 'depth': None, 'render': ('renderer_timeout_ms', 'retry_concurrency'),
-               'transcription': ('allow_network',)}
+               'transcription': ('allow_network',), 'delivery': None}
 
 
 def config_digest(config: dict[str, Any]) -> str:

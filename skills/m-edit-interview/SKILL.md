@@ -4,7 +4,7 @@ description: Use when an m-edit project has its transcript but no answered direc
 license: MIT
 compatibility: Requires the m-edit CLI and read access to the project's transcript.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # Ask 4–5 questions, once

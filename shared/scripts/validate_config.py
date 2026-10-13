@@ -67,6 +67,14 @@ def validate(config: dict[str, Any]) -> list[str]:
     depth = config.get('depth', {})
     if isinstance(depth, dict) and depth.get('matte_provider', 'none') not in {'none', 'rvm-onnx', 'precomputed'}:
         errors.append('depth.matte_provider must be "none", "rvm-onnx" or "precomputed"')
+    delivery = config.get('delivery', {})
+    if not isinstance(delivery, dict):
+        errors.append('delivery must be an object')
+    else:
+        if not isinstance(delivery.get('clean', True), bool):
+            errors.append('delivery.clean must be true or false')
+        if delivery.get('loudness', 'voice-safe') not in {'voice-safe', 'standard'}:
+            errors.append('delivery.loudness must be "voice-safe" or "standard"')
     render = config.get('render')
     if not isinstance(render, dict):
         errors.append('render must be an object')

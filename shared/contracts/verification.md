@@ -22,6 +22,7 @@ All preview checks plus:
 - duration parity with the approved preview
 - visual-fidelity comparison against the approved preview meets the configured SSIM threshold
 - no changed code, props, captions, package lock, or assets since preview approval
+- clean delivery (unless the user explicitly opted out): `m-edit deliver-clean` passed **both** rounds for exactly this file, and `mark-reel-final` received its `delivery_check.json`. The checks: no extra tags, no forbidden boxes (`udta`/`meta`/`free`/`skip`/`uuid`/`btrt`), `ftyp mp42`, `colr nclx`, short `esds`, non-zero times, no encoder or tool strings and no SEI user data; AAC-LC 48 kHz stereo encoded once at ≥ 320k; true peak ≤ −1 dBTP; no full-scale samples; the voice alone under the limiter ceiling; limiter ≤ 1 dB; SNR ≥ 18 dB against the intended mix; lag ≤ 1 sample against the mix and the original recording; 0 decode errors and per-frame video hashes identical to the render
 - final report records command, composition, hashes, and checks
 
 ## Merge

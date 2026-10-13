@@ -4,7 +4,7 @@ description: Use when someone wants raw clips edited into a professional, high-r
 license: MIT
 compatibility: Requires filesystem and shell access. Full execution uses Python 3.10+, FFmpeg/FFprobe, Node.js, npm and Remotion.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # m-edit

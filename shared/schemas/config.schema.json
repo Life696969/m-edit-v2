@@ -349,6 +349,22 @@
           "type": "boolean"
         }
       }
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Clean final delivery (m-edit deliver-clean). clean=false only on the user's explicit opt-out.",
+      "properties": {
+        "clean": {
+          "type": "boolean"
+        },
+        "loudness": {
+          "enum": [
+            "voice-safe",
+            "standard"
+          ]
+        }
+      }
     }
   }
 }

@@ -53,7 +53,8 @@ def clear_approvals(data: dict[str, Any]) -> None:
     for clip in data.get('clips', {}).values():
         clip.update({'approved_preview_hash': None, 'approved_recipe_hash': None, 'approved_recipe_bundle_digest': None,
                      'approved_guide_hash': None, 'preview_approval_receipt_id': None,
-                     'final_path': None, 'final_hash': None, 'verification_path': None})
+                     'final_path': None, 'final_hash': None, 'verification_path': None,
+                     'delivery_path': None, 'delivery_hash': None, 'delivery': None})
         if clip.get('preview_hash'):
             clip['status'] = 'preview_ready'
 
@@ -259,7 +260,27 @@ def approve_reel(project: str, evidence: str) -> None:
     print(digest)
 
 
-def mark_reel_final(project: str, clip: str, path: str, verification: str) -> None:
+def validate_delivery(final_path: Path, delivery_path: Path, clip: str) -> dict[str, Any]:
+    """A clean-delivery report (`m-edit deliver-clean`) that passed BOTH rounds for exactly this final file."""
+    report = read_json(delivery_path)
+    if report.get('passed') is not True:
+        raise SystemExit('The delivery report does not say passed: true')
+    for round_name in ('round1', 'round2'):
+        if (report.get(round_name) or {}).get('passed') is not True:
+            raise SystemExit(f'The delivery report has no passing {round_name}')
+    if report.get('clip') != clip:
+        raise SystemExit(f"The delivery report is for {report.get('clip')!r}, not {clip!r}")
+    if report.get('final_sha256') != sha256(final_path):
+        raise SystemExit('The delivery report does not match this final file (hash differs)')
+    return report
+
+
+def delivery_policy(config: dict[str, Any]) -> bool:
+    """Clean delivery is on unless the user explicitly opted out (config delivery.clean = false)."""
+    return (config.get('delivery') or {}).get('clean', True) is not False
+
+
+def mark_reel_final(project: str, clip: str, path: str, verification: str, delivery: str | None = None) -> None:
     root, control, state_path, data = load(project)
     if data['phase'] != 'finalizing_reel':
         raise SystemExit('Finals are rendered only after the whole-video review is approved')
@@ -282,9 +303,20 @@ def mark_reel_final(project: str, clip: str, path: str, verification: str) -> No
     validate_verification(final_path, verification_path,
                           preview_hash=record['approved_preview_hash'] if compare else None,
                           min_ssim=threshold if compare else None)
+    delivery_fields: dict[str, Any] = {'delivery_path': None, 'delivery_hash': None}
+    if delivery_policy(config):
+        if not delivery:
+            raise SystemExit('Clean delivery is on: run `m-edit deliver-clean deliver` and pass its report as --delivery '
+                             '(or record the user\'s explicit opt-out as delivery.clean = false)')
+        delivery_path, delivery_relative = project_relative(root, delivery, must_exist=True)
+        report = validate_delivery(final_path, delivery_path, clip)
+        delivery_fields = {'delivery_path': delivery_relative, 'delivery_hash': sha256(delivery_path),
+                           'delivery': f"clean ({report.get('loudness_mode', 'voice-safe')})"}
+    else:
+        delivery_fields['delivery'] = 'skipped: the user opted out (delivery.clean = false)'
     with project_lock(control):
         record.update({'final_path': final_relative, 'final_hash': sha256(final_path),
-                       'verification_path': verification_relative, 'status': 'complete'})
+                       'verification_path': verification_relative, 'status': 'complete', **delivery_fields})
         remaining = [n for n in data['clip_order'] if data['clips'][n]['status'] != 'complete']
         if not remaining:
             data['phase'] = 'all_clips_complete'
@@ -321,6 +353,7 @@ def main() -> None:
     c = sub.add_parser('mark-reel-final')
     for flag in ('--project', '--clip', '--path', '--verification'):
         c.add_argument(flag, required=True)
+    c.add_argument('--delivery', help='the passing deliver-clean report (required unless delivery.clean is false)')
     c = sub.add_parser('reopen-reel'); c.add_argument('--project', required=True); c.add_argument('--reason', required=True)
     a = parser.parse_args()
     {
@@ -329,7 +362,7 @@ def main() -> None:
         'record-preview': lambda: record_preview(a.project, a.clip, a.path, a.recipe, a.verification),
         'await-reel-approval': lambda: await_reel_approval(a.project, a.review),
         'approve-reel': lambda: approve_reel(a.project, a.evidence),
-        'mark-reel-final': lambda: mark_reel_final(a.project, a.clip, a.path, a.verification),
+        'mark-reel-final': lambda: mark_reel_final(a.project, a.clip, a.path, a.verification, a.delivery),
         'reopen-reel': lambda: reopen_reel(a.project, a.reason),
     }[a.command]()
 

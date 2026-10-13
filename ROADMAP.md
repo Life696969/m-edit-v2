@@ -1,5 +1,9 @@
 # Roadmap
 
+## Shipped in 2.1
+
+- **Clean final delivery**: no metadata or encoder traces, top-notch single-encode audio, and a two-round check before a final is recorded. See [`docs/CLEAN-DELIVERY.md`](docs/CLEAN-DELIVERY.md).
+
 ## Before stable 1.0
 
 - run pressure evals on Claude Code and Codex with real video fixtures

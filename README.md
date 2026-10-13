@@ -12,6 +12,7 @@ The agent then edits everything as creative director:
 * illustrations of what you say, cutting from you to the drawing and back;
 * a subtle camera move every second;
 * one big hero moment with a music drop;
+* clean finals: no metadata or encoder traces, your own voice at gain only, encoded once;
 * free, licensed music and sound effects.
 
 It checks its own work and comes back with **one full preview**. Approve it and you get **each clip as its own finished file** (merged only if you ask).
@@ -33,12 +34,14 @@ m-edit is self-contained and generic. It reads no style files and assumes no cre
 | Free, licensed audio | Every downloaded file is logged with its source and licence | `assets.ledger` |
 | Exact captions | At most 4 words per beat; every spoken word exactly once | `captions.*` |
 | Separate final files | Each clip rendered and verified against its approved preview | state machine + `verify` |
+| Clean finals | No tags, encoder strings or FFmpeg box fingerprints (nothing forged); the original voice at gain only at the loudness you pick; one AAC encode; two independent check rounds | `deliver-clean` + `mark-reel-final --delivery` |
 
 The agent asks only twice: the questions, then the preview. It asks before downloading anything (music, sound effects, models) or installing packages.
 
 ## Requirements
 
 * Python 3.10+, FFmpeg and FFprobe.
+* numpy, for clean final delivery (`python -m pip install numpy`; the agent asks before installing).
 * Node.js and npm. m-edit renders with [Remotion](https://www.remotion.dev).
   * The starter project is installed with your permission.
   * **Remotion licence:** free for individuals and companies of up to 3 people; larger companies need a [Remotion company licence](https://www.remotion.dev/license).
@@ -109,7 +112,7 @@ python shared/scripts/release_audit.py --root .
 
 ## Status
 
-`2.0.0`.
+`2.1.0`. Clean final delivery: no metadata or encoder traces, the original voice at gain only, one AAC encode, and two check rounds (see [Clean final delivery](docs/CLEAN-DELIVERY.md)).
 
 * **Tested:** the workflow, integrity layer, audit and render templates.
 * **Depends on the agent:** the quality of each video's illustrations comes from the coding agent drawing them.

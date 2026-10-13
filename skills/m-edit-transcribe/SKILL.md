@@ -4,7 +4,7 @@ description: Use when an m-edit project's clips have no transcript yet, the spok
 license: MIT
 compatibility: Requires media inspection capability or a local transcription provider.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # Transcribe, then go straight to the questions

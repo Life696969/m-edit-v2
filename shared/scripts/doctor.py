@@ -105,6 +105,26 @@ def main() -> None:
     else:
         add('depth-matte', True, 'off (hero graphics go in front of the speaker; enable with depth.matte_provider)', required=False)
 
+    clean = (config.get('delivery') or {}).get('clean', True) is not False
+    if clean:
+        has_numpy = importlib.util.find_spec('numpy') is not None
+        caps = {'filter_units': ('-bsfs', 'filter_units'), 'alimiter': ('-filters', ' alimiter '), 'aac': ('-encoders', ' aac ')}
+        found = {}
+        for name, (flag, needle) in caps.items():
+            listing = ''
+            if shutil.which('ffmpeg'):
+                try:
+                    listing = subprocess.run([shutil.which('ffmpeg'), '-hide_banner', flag], text=True,
+                                             capture_output=True, timeout=30).stdout
+                except (OSError, subprocess.TimeoutExpired):
+                    listing = ''
+            found[name] = needle in listing
+        add('clean-delivery', has_numpy and all(found.values()),
+            f'numpy={has_numpy}, ffmpeg {", ".join(f"{k}={v}" for k, v in found.items())}'
+            + ('' if has_numpy else ' (ask the user, then: python -m pip install numpy)'))
+    else:
+        add('clean-delivery', True, 'off: the user opted out (delivery.clean = false)', required=False)
+
     try:
         free_gb = shutil.disk_usage(root).free / 1e9
         add('disk-space', free_gb >= 5, f'{free_gb:.1f} GB free (4K finals can need several GB)', required=False)

@@ -9,6 +9,7 @@ A finished m-edit video is:
 * **coherent:** one look across type, cards, motion and sound
 * **licensed:** every downloaded asset is in the ledger, with its source and licence
 * **faithful:** each final matches its approved preview
+* **clean:** each final carries no metadata or encoder traces, and its audio is the original recording at gain only, encoded once (unless the user explicitly opted out)
 * **auditable:** answers, approvals, hashes and verification are recorded
 
 ## Red flags
@@ -28,3 +29,5 @@ STOP and correct course when you catch yourself rationalizing any of these:
 | "I'll merge everything into one file for convenience." | Finals are individual files. Merge only on request. |
 | "The audit is a formality; I'll record the preview anyway." | `record-preview` refuses an edit without a passing audit of the current file. |
 | "I only changed a tiny thing after approval." | Any change after approval needs `reopen-reel` and a new review. |
+| "Delivery failed one check; I'll hand over the render instead." | A final that fails either delivery round is not a final. Fix the cause (usually a mix too hot for the 1 dB limiter: lower the bed or a cue), then deliver again. Only the user can opt out. |
+| "A compressor will make the voice sound more professional." | The voice is the original recording at gain only. Loudness comes from the delivery gain, never from squashing the voice. |

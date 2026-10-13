@@ -4,7 +4,7 @@ description: Use when an m-edit project has answered direction and the whole vid
 license: MIT
 compatibility: Requires FFmpeg/FFprobe, Remotion (an existing project or the bundled starter) and the m-edit CLI.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # Direct the edit
@@ -74,7 +74,7 @@ m-edit record-preview --project "<folder>" --clip "<clip>" --path "<preview>" --
    * a dead stretch
    * overediting: two things fighting for one beat, decoration that doesn't match the words, or no clean face moments
 
-   Check loudness (about −14 to −15 LUFS), true peak (at most −1 dBTP) and A/V sync.
+   Check true peak (at most −1 dBTP) and A/V sync. The preview plays each recording at its own level; the final loudness is set once, at delivery (`m-edit deliver-clean`), so judge the **balance** here: music and effects against the voice.
 9. **Review package.** Make one stitched review file (review only; the finals stay separate) and write `reel_review.md` from the template. Then:
 
 ```bash

@@ -114,8 +114,17 @@ class DirectorWorkflowTests(unittest.TestCase):
             verification = out / f'reports/{stem}-final-verification.json'
             self.cli('verify', '--input', str(final), '--output', str(verification),
                      '--compare-preview', str(preview), '--min-ssim', '0.999', '--require-audio')
+            refused = self.cli('mark-reel-final', '--project', self.p, '--clip', name, '--path', self.rel(final),
+                               '--verification', self.rel(verification), check=False)
+            self.assertNotEqual(refused.returncode, 0, 'clean delivery is on by default: a final needs its delivery report')
+            delivery = self.project / '.m-edit' / 'deliveries' / name / 'delivery_check.json'
+            delivery.parent.mkdir(parents=True, exist_ok=True)
+            from common import sha256                          # a passing report stands in for `m-edit deliver-clean`
+            delivery.write_text(json.dumps({'passed': True, 'clip': name, 'final_sha256': sha256(final),
+                                            'loudness_mode': 'voice-safe', 'round1': {'passed': True},
+                                            'round2': {'passed': True}}), encoding='utf-8')
             self.cli('mark-reel-final', '--project', self.p, '--clip', name, '--path', self.rel(final),
-                     '--verification', self.rel(verification))
+                     '--verification', self.rel(verification), '--delivery', self.rel(delivery))
 
     def status(self) -> dict:
         return json.loads(self.cli('status', '--project', self.p).stdout)

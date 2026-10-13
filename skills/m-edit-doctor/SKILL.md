@@ -4,7 +4,7 @@ description: Use when m-edit installation, FFmpeg, Remotion, transcription, conf
 license: MIT
 compatibility: Requires Python 3.10+ for the bundled diagnostic command.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # Diagnose m-edit

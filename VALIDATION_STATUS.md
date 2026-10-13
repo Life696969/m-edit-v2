@@ -1,8 +1,26 @@
 # Validation status
 
-Version: `2.0.0`
+Version: `2.1.0`
 
 Validated locally on August 1, 2026 in a Linux environment with Python 3.13, Node.js 22, npm 10, and FFmpeg 7.
+
+## 2.1.0: validated locally on 2026-10-13
+
+Windows 11, Python 3.13, FFmpeg 8.1, numpy.
+
+* **The full suite passes:** 70 tests, 5 skipped as before (the bash-installer and POSIX-only tests skip on Windows).
+* **Clean delivery** (`tests/test_delivery.py`, 11 tests):
+  * a dirty render fails every metadata check, and the scrub passes with identical decoded samples;
+  * a one-clip project passes both rounds with 0 lag, a gain-only voice-safe level, ≥ 18 dB SNR and a bit-exact video;
+  * `standard` is quieter than `voice-safe`, and neither lets the voice reach the ceiling;
+  * an undershooting AAC encode is redone from the lossless mix;
+  * a dual-mono mix is warned, not refused;
+  * lossy audio is never re-encoded;
+  * a phone frame rate (~29.92 fps) keeps every frame;
+  * `mark-reel-final` accepts only a passing two-round report for exactly the final, unless the user opted out.
+* **Real footage:** a 6 s phone recording (hot: −8.3 LUFS, peaks above 0 dBFS) with a real music bed and two library SFX passed both rounds. Voice gain only (−2.18 dB, voice-safe), −10.49 LUFS, true peak −1.7 dBTP, limiter 0.0 dB, SNR 50.9 dB, lag 0/0, 180/180 frames bit-exact, AAC-LC 320 kbps, no tags beyond brand/language/neutral handlers.
+* **Release audit** and **skill validation** pass.
+* **Not yet done:** a full m-edit edit run through `m-edit-final` by an agent on real footage; macOS/Linux runs of the delivery tests.
 
 ## 2.0.0: validated locally on 2026-10-02
 

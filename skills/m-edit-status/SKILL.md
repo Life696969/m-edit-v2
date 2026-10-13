@@ -4,7 +4,7 @@ description: Use when a user asks what an m-edit project completed, what is wait
 license: MIT
 compatibility: Requires read access to the project's `.m-edit` directory.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # Report state without changing it

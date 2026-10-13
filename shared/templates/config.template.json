@@ -70,5 +70,9 @@
     "full_decode": true,
     "generate_contact_sheet": true,
     "compare_final_to_preview": true
+  },
+  "delivery": {
+    "clean": true,
+    "loudness": "voice-safe"
   }
 }
